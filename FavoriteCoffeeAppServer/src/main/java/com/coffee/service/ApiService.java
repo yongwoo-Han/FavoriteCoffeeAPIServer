@@ -27,29 +27,35 @@ public class ApiService {
 	public ResponseEntity<?> getBlogDataJson() {
 		
 		try {
-			String clientId = propertyConfigBean.getClientId(); //Naver Client ID
-			String clientSecret = propertyConfigBean.getClientSecret(); //Naver Client Secret
-			String text = URLEncoder.encode("그린팩토리", "UTF-8");
-			String apiUrl = ConstantData.NAVER_BLOG_URL_JSON + text;
+//			String clientId = propertyConfigBean.getNaver().getClientId(); //Naver Client ID
+//			String clientSecret = propertyConfigBean.getNaver().getClientSecret(); //Naver Client Secret
+			
+			String clientId = propertyConfigBean.getKakao().getRestApi();
+					
+			String text = URLEncoder.encode("카카오프렌즈", "UTF-8");
+			String apiUrl = ConstantData.KAKAO_GEO_URL_JSON + text;
 			
 			HttpHeaders header = new HttpHeaders();
 			header.add(HttpHeaders.ACCEPT, MediaType.TEXT_HTML_VALUE);
-			header.add("X-Naver-Client-Id", clientId);
-			header.add("X-Naver-Client-Secret", clientSecret);
+//			header.add("X-Naver-Client-Id", clientId);
+//			header.add("X-Naver-Client-Secret", clientSecret);
+			header.add("KakaoAK", clientId);
 			
 			Map<String, Object> param = new HashMap<>();
 			param.put("display", 10);
 			param.put("start", 1);
 			param.put("sort", "sim");
-			ResponseEntity<String> dataJson = new RestTemplate().exchange(apiUrl, HttpMethod.GET, new HttpEntity(param, header), String.class);
+			ResponseEntity<?> dataJson = new RestTemplate().exchange(apiUrl, HttpMethod.GET, new HttpEntity<Map<?, ?>>(param, header), String.class);
 			
 			System.out.println(dataJson);
+			return dataJson;
 			
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		return ResponseEntity.ok().body(null);
+		return null;
+		
 	}
 }
