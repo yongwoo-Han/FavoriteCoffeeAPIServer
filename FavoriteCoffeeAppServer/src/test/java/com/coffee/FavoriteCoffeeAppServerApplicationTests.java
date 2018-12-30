@@ -1,33 +1,38 @@
 package com.coffee;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
-
-import org.hamcrest.text.IsEmptyString;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.coffee.config.PropertyConfigBean;
-import com.coffee.config.api.Naver;
+import com.coffee.model.AreaRepository;
+import com.coffee.model.CountryRepository;
+import com.coffee.model.beans.Area;
+import com.coffee.model.beans.Area.AreaBuilder;
+import com.coffee.model.beans.Country;
+import com.coffee.model.beans.Country.CountryBuilder;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class FavoriteCoffeeAppServerApplicationTests {
 
 	@Autowired
-	private PropertyConfigBean propertyConfigBean; 
+	private CountryRepository countryRepository;
+	
+	@Autowired
+	private AreaRepository areaRepository;
 	
 	@Test
 	public void contextLoads() {
 //		Naver naver = propertyConfigBean.getNaver();
-		String restApi = propertyConfigBean.getKakao().getRestApi();
-		System.out.println(restApi);
-		assertNotNull(restApi);
+		CountryBuilder country = Country.builder().countryName("케냐");
+		AreaBuilder area = Area.builder().name("어느지역이더라").country(country.build());
+		countryRepository.save(country.build());
+		areaRepository.save(area.build());
+		
+		System.out.println(countryRepository.findById((long)1));
+		System.out.println(areaRepository.findById("어느지역이더라"));
 	}
 
 }
