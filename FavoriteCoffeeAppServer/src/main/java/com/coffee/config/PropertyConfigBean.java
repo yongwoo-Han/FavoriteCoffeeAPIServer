@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 import com.coffee.config.api.Kakao;
 import com.coffee.config.api.Naver;
+import com.coffee.config.api.PublicPerformance;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,5 +18,6 @@ public class PropertyConfigBean {
 	
 	private Kakao kakao;
 	private Naver naver;
+	private PublicPerformance publicPerformance;
 }
 

@@ -28,7 +28,7 @@ public class ApiController {
 
 	@RequestMapping("searchFromNaver")
 	public ResponseEntity<?> searchFromNaver(@RequestParam Map<String, Object> param) {
-		return ResponseEntity.ok().body(apiService.getBlogDataJson());
+		return ResponseEntity.ok().body(apiService.searchPerformanceInformationCheckPeriod());
 	}
 	
 }

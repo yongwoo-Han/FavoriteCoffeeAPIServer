@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,35 @@ public class ApiService {
 
 	@Autowired
 	private PropertyConfigBean propertyConfigBean;
+	
+	/**
+	 * 기간별 공연 정보 조회
+	 * @return
+	 */
+	public ResponseEntity<?> searchPerformanceInformationCheckPeriod() {
+		
+		String serverURL = ConstantData.PUBLIC_URL + ConstantData.PERIOD_PUBLIC_URL; // 공공 서버 URL
+		String serverApi = propertyConfigBean.getPublicPerformance().getServerApi(); // 공공 서비스 API
+		
+		String requestURL = serverURL + "?ServiceKey=" + serverApi;
+		
+		HttpHeaders header = new HttpHeaders();
+		header.add(HttpHeaders.ACCEPT, MediaType.TEXT_HTML_VALUE);
+		
+		ResponseEntity<?> dataJson = new RestTemplate().exchange(requestURL, HttpMethod.GET, new HttpEntity<Map<?, ?>>(header), String.class);
+		System.out.println(dataJson);
+		
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	
+	/**
+	 * 공연/전시 상세 정보 조회
+	 * @return
+	 */
+	public ResponseEntity<?> performanceDisplayDetailsCheck() {
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 	
 	public ResponseEntity<?> getBlogDataJson() {
 		

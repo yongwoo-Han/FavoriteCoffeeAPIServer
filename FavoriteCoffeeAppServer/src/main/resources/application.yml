@@ -5,15 +5,5 @@ open-api:
   kakao:
     restApi: 948a23f74ed9d2800a191d2d55846a84
     nativeApi: 211d8a55b6c980eb0ee11214255f921b
-#    javascript-api: 386db79224235d8ec1522fdc1ac4b5a8
-#    admin-api: d9f2580fe02b4f3f830c950787a35e9e
-
-#spring:
-#  datasource:
-#    url: jdbc:mysql://localhost:3306/favoritecoffee
-#    username: root
-#    password: h1033489
-#  jpa:
-#    hibernate:
-#      ddl-auto: create
-#    
+  publicPerformance:
+    serverApi: jXdXc1GXAE0yd3d2HHUM8dy%2B126jZGEFWeXIb7zoZyPPYLTaM4csywE8P9PZFLbejXaA41AxjP3LDVjHudHrTw%3D%3D
