@@ -1,7 +1,13 @@
 package com.coffee.controller;
 
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.util.Map;
+
+import javax.xml.bind.JAXBException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -27,8 +33,8 @@ public class ApiController {
 	}
 
 	@RequestMapping("searchFromNaver")
-	public ResponseEntity<?> searchFromNaver(@RequestParam Map<String, Object> param) {
-		return ResponseEntity.ok().body(apiService.searchPerformanceInformationCheckPeriod());
+	public ResponseEntity<?> searchFromNaver(@RequestParam Map<String, Object> param) throws IOException, URISyntaxException, JAXBException {
+		return ResponseEntity.ok().body(apiService.searchPerformanceInformationCheckPeriod1());
 	}
 	
 }
