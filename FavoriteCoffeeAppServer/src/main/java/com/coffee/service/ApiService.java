@@ -46,16 +46,13 @@ public class ApiService {
 	private RestTemplate restTemplate;
 	
 	
-	public ResponseEntity<?> searchPerformanceInformationCheckPeriod1() throws IOException, URISyntaxException, JAXBException {
+	public ResponseEntity<?> searchPerformanceInformationCheckPeriod() throws IOException, URISyntaxException, JAXBException {
 		
 		String serverURL = ConstantData.PUBLIC_URL + "/" + ConstantData.PERIOD_PUBLIC_URL; // 공공 서버 URL
 		String serverKey = propertyConfigBean.getPublicPerformance().getServerApi().trim(); // 공공 서비스 API
 		
-//		String serverKey = propertyConfigBean.getPublicPerformance().getServerApi(); // 공공 서비스 API
-//		String requestURL = serverURL + "&ServiceKey=" + serverKey + "&sortStdr=1&RequestTime=20100810%3A23003422&from=20180101&to=20201201&cPage=1&rows=10&place=1";
-		
 		UriComponents builder = UriComponentsBuilder.fromHttpUrl(serverURL)
-				.queryParam("ServiceKey", "jXdXc1GXAE0yd3d2HHUM8dy%2B126jZGEFWeXIb7zoZyPPYLTaM4csywE8P9PZFLbejXaA41AxjP3LDVjHudHrTw%3D%3D")
+				.queryParam("serviceKey", serverKey)
 				.queryParam("sortStdr", 1)
 				.queryParam("RequestTime", "20100810:23003422")
 				.queryParam("from", 20180101)
@@ -101,28 +98,26 @@ public class ApiService {
 	 * @throws IOException 
 	 * @throws URISyntaxException 
 	 */
-	public ResponseEntity<?> searchPerformanceInformationCheckPeriod() throws IOException, URISyntaxException {
+	public ResponseEntity<?> searchPerformanceInformationCheckPeriod1() throws IOException, URISyntaxException {
 		
 		String serverURL = ConstantData.PUBLIC_URL + "/" + ConstantData.PERIOD_PUBLIC_URL; // 공공 서버 URL
 		String serverKey = propertyConfigBean.getPublicPerformance().getServerApi().trim(); // 공공 서비스 API
 		
-		String testUrl = "http://www.culture.go.kr/openapi/rest/publicperformancedisplays/area";
-//		String requestURL = serverURL + "?ServiceKey=" + decodeServerKey;
+		String requestURL = serverURL;
 		
-//		URI requestURI = new URI(requestURL);
 		restTemplate = new RestTemplate();
 		HttpHeaders header = new HttpHeaders();
 		header.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
 		
-		UriComponents builder = UriComponentsBuilder.fromHttpUrl(serverURL)
-				.queryParam("serviceKey", "jXdXc1GXAE0yd3d2HHUM8dy+126jZGEFWeXIb7zoZyPPYLTaM4csywE8P9PZFLbejXaA41AxjP3LDVjHudHrTw==")
-//				.queryParam("sortStdr", 1)
-//				.queryParam("RequestTime", "20100810:23003422")
-//				.queryParam("from", 20180101)
-//				.queryParam("to", 20201201)
-//				.queryParam("cPage", 1)
-//				.queryParam("rows", 10)
-//				.queryParam("place", 1)
+		UriComponents builder = UriComponentsBuilder.fromHttpUrl(requestURL)
+				.queryParam("serviceKey",serverKey)
+				.queryParam("sortStdr", 1)
+				.queryParam("RequestTime", "20100810:23003422")
+				.queryParam("from", 20180101)
+				.queryParam("to", 20201201)
+				.queryParam("cPage", 1)
+				.queryParam("rows", 10)
+				.queryParam("place", 1)
 				.build(false);
 		
 		ResponseEntity<?> data = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, new HttpEntity<String>(header), String.class);

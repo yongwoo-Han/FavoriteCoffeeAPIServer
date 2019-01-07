@@ -32,9 +32,9 @@ public class ApiController {
 		return "hello";
 	}
 
-	@RequestMapping("searchFromNaver")
-	public ResponseEntity<?> searchFromNaver(@RequestParam Map<String, Object> param) throws IOException, URISyntaxException, JAXBException {
-		return ResponseEntity.ok().body(apiService.searchPerformanceInformationCheckPeriod1());
+	@RequestMapping("searchPerformanceList")
+	public ResponseEntity<?> searchPerformanceList(@RequestParam Map<String, Object> param) throws IOException, URISyntaxException, JAXBException {
+		return ResponseEntity.ok().body(apiService.searchPerformanceInformationCheckPeriod());
 	}
 	
 }
