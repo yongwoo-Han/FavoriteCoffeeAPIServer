@@ -1,31 +1,23 @@
 package com.coffee.service;
 
-import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.URI;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URISyntaxException;
-import java.net.URL;
-import java.net.URLDecoder;
 import java.net.URLEncoder;
-import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
-import javax.xml.ws.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -36,6 +28,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.coffee.config.PropertyConfigBean;
 import com.coffee.constant.ConstantData;
 import com.coffee.model.perf.PerformanceVO;
+import com.coffee.util.ConnectionUtils;
 
 @Service
 public class ApiService {
@@ -45,102 +38,75 @@ public class ApiService {
 	
 	private RestTemplate restTemplate;
 	
-	
-	public ResponseEntity<?> searchPerformanceInformationCheckPeriod1() throws IOException, URISyntaxException, JAXBException {
+	/**
+	 * 공연/전시 상세정보 조회
+	 * @param param
+	 * @return
+	 * @throws MalformedURLException
+	 * @throws ProtocolException
+	 * @throws IOException
+	 * @throws JAXBException 
+	 */
+	public ResponseEntity<?> searchPerformanceDetailInfo(Map<String, Object> param) throws IOException, URISyntaxException, JAXBException {
 		
-		String serverURL = ConstantData.PUBLIC_URL + "/" + ConstantData.PERIOD_PUBLIC_URL; // 공공 서버 URL
+		String serverURL = ConstantData.PUBLIC_URL + "/" + ConstantData.DETAIL_PUBLIC_URL; // 공공 서버 URL
 		String serverKey = propertyConfigBean.getPublicPerformance().getServerApi().trim(); // 공공 서비스 API
 		
-//		String serverKey = propertyConfigBean.getPublicPerformance().getServerApi(); // 공공 서비스 API
-//		String requestURL = serverURL + "&ServiceKey=" + serverKey + "&sortStdr=1&RequestTime=20100810%3A23003422&from=20180101&to=20201201&cPage=1&rows=10&place=1";
-		
 		UriComponents builder = UriComponentsBuilder.fromHttpUrl(serverURL)
-				.queryParam("ServiceKey", "jXdXc1GXAE0yd3d2HHUM8dy%2B126jZGEFWeXIb7zoZyPPYLTaM4csywE8P9PZFLbejXaA41AxjP3LDVjHudHrTw%3D%3D")
-				.queryParam("sortStdr", 1)
-				.queryParam("RequestTime", "20100810:23003422")
-				.queryParam("from", 20180101)
-				.queryParam("to", 20201201)
-				.queryParam("cPage", 1)
-				.queryParam("rows", 10)
-				.queryParam("place", 1)
-				.build(false);
+								.queryParam("serviceKey", serverKey)
+								.queryParam("seq", param.get("seq"))
+								.build(false);
 		
-		URL url = new URL(builder.toUriString());
-		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setRequestMethod("GET");
-        conn.setRequestProperty("Content-type", "application/json");
-        System.out.println("Response code: " + conn.getResponseCode());
-        BufferedReader rd;
-        if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-        } else {
-            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
-        }
-        StringBuilder sb = new StringBuilder();
-        String line;
-        while ((line = rd.readLine()) != null) {
-            sb.append(line);
-        }
-        rd.close();
-        conn.disconnect();
-        System.out.println(sb.toString());
+		StringBuilder sb = ConnectionUtils.connectionURLComponent(builder);
         
         StringReader sr = new StringReader(sb.toString());
         JAXBContext jaxbContext = JAXBContext.newInstance(PerformanceVO.class);
         Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
         PerformanceVO performanceVO = (PerformanceVO) unmarshaller.unmarshal(sr);
         
+        System.out.println("Detail -----" + sb);
         System.out.println(performanceVO);
 		
 		return ResponseEntity.ok().body(performanceVO);
 	}
 	
+	
 	/**
-	 * 기간별 공연 정보 조회
+	 * 지역/ 기간/ 분류별 리스트 정보 조회
 	 * @return
-	 * @throws IOException 
-	 * @throws URISyntaxException 
+	 * @throws IOException
+	 * @throws URISyntaxException
+	 * @throws JAXBException
 	 */
-	public ResponseEntity<?> searchPerformanceInformationCheckPeriod() throws IOException, URISyntaxException {
+	public ResponseEntity<?> searchPerformanceInformationCheckPeriod(Map<String, Object> param) throws IOException, URISyntaxException, JAXBException {
 		
 		String serverURL = ConstantData.PUBLIC_URL + "/" + ConstantData.PERIOD_PUBLIC_URL; // 공공 서버 URL
 		String serverKey = propertyConfigBean.getPublicPerformance().getServerApi().trim(); // 공공 서비스 API
 		
-		String testUrl = "http://www.culture.go.kr/openapi/rest/publicperformancedisplays/area";
-//		String requestURL = serverURL + "?ServiceKey=" + decodeServerKey;
-		
-//		URI requestURI = new URI(requestURL);
-		restTemplate = new RestTemplate();
-		HttpHeaders header = new HttpHeaders();
-		header.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
-		
 		UriComponents builder = UriComponentsBuilder.fromHttpUrl(serverURL)
-				.queryParam("serviceKey", "jXdXc1GXAE0yd3d2HHUM8dy+126jZGEFWeXIb7zoZyPPYLTaM4csywE8P9PZFLbejXaA41AxjP3LDVjHudHrTw==")
-//				.queryParam("sortStdr", 1)
-//				.queryParam("RequestTime", "20100810:23003422")
-//				.queryParam("from", 20180101)
-//				.queryParam("to", 20201201)
-//				.queryParam("cPage", 1)
-//				.queryParam("rows", 10)
-//				.queryParam("place", 1)
+				.queryParam("serviceKey", serverKey)
+				.queryParam("sortStdr", 3)
+				.queryParam("RequestTime", "20100810:23003422")
+				.queryParam("from", 20180101)
+				.queryParam("to", 20201201)
+				.queryParam("cPage", 1)
+				.queryParam("rows", 30)
+				.queryParam("place", 1)
 				.build(false);
 		
-		ResponseEntity<?> data = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, new HttpEntity<String>(header), String.class);
-//		PerformanceVO forEntity = restTemplate.getForObject(builder.toUriString(), PerformanceVO.class);
-		System.out.println(data.getBody());
+		StringBuilder sb = ConnectionUtils.connectionURLComponent(builder);
+        
+        StringReader sr = new StringReader(sb.toString());
+        JAXBContext jaxbContext = JAXBContext.newInstance(PerformanceVO.class);
+        Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+        PerformanceVO performanceVO = (PerformanceVO) unmarshaller.unmarshal(sr);
+        
+        System.out.println("List -----" + sb);
+        System.out.println(performanceVO);
 		
-		
-		return new ResponseEntity<>(HttpStatus.OK);
+		return ResponseEntity.ok().body(performanceVO);
 	}
-	
-	
-	/**
-	 * 공연/전시 상세 정보 조회
-	 * @return
-	 */
-	public ResponseEntity<?> performanceDisplayDetailsCheck() {
-		return new ResponseEntity<>(HttpStatus.OK);
-	}
+
 	
 	public ResponseEntity<?> getBlogDataJson() {
 		

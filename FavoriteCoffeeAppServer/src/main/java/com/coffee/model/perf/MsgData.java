@@ -24,4 +24,7 @@ public class MsgData {
     
     @XmlElement(name="perforList")
     private List<PerforListDTO> perforList;
+    
+    @XmlElement(name="perforInfo")
+    private PerforDetailInfoDTO perforInfo;
 }

@@ -17,10 +17,10 @@ public class ConstantData {
 	// 공공 데이터 조회 URL
 	public final static String PUBLIC_URL = "http://www.culture.go.kr/openapi/rest/publicperformancedisplays";
 	
-	// 기간별 공연 정보 조회
-	public final static String PERIOD_PUBLIC_URL = "period";
-	
-	
+	public final static String PERIOD_PUBLIC_URL	= "period"; 	// 기간별 공연 정보 조회
+	public final static String ARIA_PUBLIC_URL 		= "area"; 	// 지역별 공연 정보 조회
+	public final static String REALM_PUBLIC_URL 	= "realm"; 	// 분야별 공연 정보 조회
+	public final static String DETAIL_PUBLIC_URL 	= "d/"; 	// 분야별 공연 정보 조회
 	
 	
 }
