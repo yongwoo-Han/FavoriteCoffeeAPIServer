@@ -1,8 +1,6 @@
 package com.coffee.controller;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.util.Map;
 
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.coffee.config.PropertyConfigBean;
 import com.coffee.constant.ConstantData;
 import com.coffee.service.ApiService;
 
