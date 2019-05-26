@@ -5,30 +5,5 @@ open-api:
   kakao:
     restApi: 948a23f74ed9d2800a191d2d55846a84
     nativeApi: 211d8a55b6c980eb0ee11214255f921b
-#    javascript-api: 386db79224235d8ec1522fdc1ac4b5a8
-#    admin-api: d9f2580fe02b4f3f830c950787a35e9e
-
-spring:
-  datasource:
-    url: jdbc:h2:mem:example-app;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
-    platform: h2
-    username: sa
-    password: 
-    driver-class-name: org.h2.Driver
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
-      settings:
-        trace: false
-        web-allow-others: false
-  jpa:
-    hibernate:
-      ddl-auto: update
-    database-platform: org.hibernate.dialect.H2Dialect
-    properties:
-      hibernate: 
-        show_sql: true
-        use_sql_comments: false
-        format_sql: true
-    
+  publicPerformance:
+    serverApi: 19g8EIV14ZGziVgAZacZ%2BRjN7%2BmE0KpRpl6Pf5Em2DpQ3lBJIBYIfAzjJrlg0C%2BZwNv6DmPii9WdqP0RgpAAPg%3D%3D

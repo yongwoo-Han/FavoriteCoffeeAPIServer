@@ -1,0 +1,49 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="response">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="comMsgHeader">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:string" name="RequestMsgID"/>
+              <xs:element type="xs:string" name="ResponseTime"/>
+              <xs:element type="xs:string" name="ResponseMsgID"/>
+              <xs:element type="xs:string" name="SuccessYN"/>
+              <xs:element type="xs:int" name="ReturnCode"/>
+              <xs:element type="xs:string" name="ErrMsg"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="msgBody">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:int" name="totalCount"/>
+              <xs:element type="xs:int" name="cPage"/>
+              <xs:element type="xs:int" name="rows"/>
+              <xs:element type="xs:int" name="from"/>
+              <xs:element type="xs:int" name="to"/>
+              <xs:element type="xs:int" name="place"/>
+              <xs:element type="xs:int" name="sortStdr"/>
+              <xs:element name="perforList" maxOccurs="unbounded" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:int" name="seq"/>
+                    <xs:element type="xs:string" name="title"/>
+                    <xs:element type="xs:int" name="startDate"/>
+                    <xs:element type="xs:int" name="endDate"/>
+                    <xs:element type="xs:string" name="place"/>
+                    <xs:element type="xs:string" name="realmName"/>
+                    <xs:element type="xs:string" name="area"/>
+                    <xs:element type="xs:anyURI" name="thumbnail"/>
+                    <xs:element type="xs:float" name="gpsX"/>
+                    <xs:element type="xs:float" name="gpsY"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

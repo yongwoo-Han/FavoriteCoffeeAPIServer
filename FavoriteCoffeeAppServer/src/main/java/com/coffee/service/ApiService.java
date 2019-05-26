@@ -7,7 +7,6 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URISyntaxException;
 import java.net.URLEncoder;
-import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -66,7 +64,7 @@ public class ApiService {
         Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
         PerformanceVO performanceVO = (PerformanceVO) unmarshaller.unmarshal(sr);
         
-        System.out.println(performanceVO);
+        System.out.println(sb);
 		
 		return ResponseEntity.ok().body(performanceVO);
 	}

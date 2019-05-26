@@ -54,7 +54,7 @@ public class ApiController {
 	 * @throws URISyntaxException
 	 * @throws JAXBException
 	 */
-	@PostMapping("searchPerformanceInfo")
+	@RequestMapping("searchPerformanceInfo")
 	public ResponseEntity<?> searchPerformanceInfo(@RequestParam Map<String, Object> param) throws IOException, URISyntaxException, JAXBException {
 		return ResponseEntity.ok().body(apiService.searchPerformanceDetailInfo(param));
 	}
